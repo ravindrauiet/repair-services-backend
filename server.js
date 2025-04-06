@@ -16,6 +16,7 @@ const modelRoutes = require('./src/routes/model.routes');
 const adminRoutes = require('./src/routes/admin.routes');
 const dashboardRoutes = require('./src/routes/dashboard.routes');
 const wishlistRoutes = require('./src/routes/wishlist.routes');
+const cartRoutes = require('./src/routes/cart.routes');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use('/api/models', modelRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/cart', cartRoutes);
 
 // Root route
 app.get('/', (req, res) => {
@@ -61,12 +63,13 @@ app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   
   try {
-    // Test database connection and sync models
+    // Test database connection only
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
     
-    await sequelize.sync({ alter: true });
-    console.log('Database synchronized');
+    // Comment out sync for now to avoid schema issues
+    // await sequelize.sync({ alter: true });
+    // console.log('Database synchronized');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }

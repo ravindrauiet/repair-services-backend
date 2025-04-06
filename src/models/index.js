@@ -41,6 +41,7 @@ db.Review = require('./review.model.js')(sequelize, Sequelize);
 db.Wishlist = require('./wishlist.model.js')(sequelize, Sequelize);
 db.WishlistItem = require('./wishlistItem.model.js')(sequelize, Sequelize);
 db.ProductImage = require('./productImage.model.js')(sequelize, Sequelize);
+db.Cart = require('./cart.model.js')(sequelize, Sequelize);
 
 // Define associations
 
@@ -89,8 +90,8 @@ db.Category.hasMany(db.DeviceModel, { foreignKey: 'categoryId' });
 db.DeviceModel.belongsTo(db.Category, { foreignKey: 'categoryId' });
 
 // User-Order relationship
-db.User.hasMany(db.Order, { foreignKey: 'userId' });
-db.Order.belongsTo(db.User, { foreignKey: 'userId' });
+db.User.hasMany(db.Order, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.Order.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 // Order-OrderItem relationship
 db.Order.hasMany(db.OrderItem, { foreignKey: 'orderId' });
@@ -101,8 +102,8 @@ db.Product.hasMany(db.OrderItem, { foreignKey: 'productId' });
 db.OrderItem.belongsTo(db.Product, { foreignKey: 'productId' });
 
 // User-Booking relationship
-db.User.hasMany(db.Booking, { foreignKey: 'userId' });
-db.Booking.belongsTo(db.User, { foreignKey: 'userId' });
+db.User.hasMany(db.Booking, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.Booking.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 // Service-Booking relationship
 db.Service.hasMany(db.Booking, { foreignKey: 'serviceId' });
@@ -127,5 +128,9 @@ db.WishlistItem.belongsTo(db.Wishlist, { foreignKey: 'wishlistId' });
 // Product-WishlistItem relationship
 db.Product.hasMany(db.WishlistItem, { foreignKey: 'productId' });
 db.WishlistItem.belongsTo(db.Product, { foreignKey: 'productId' });
+
+// User-Cart relationship
+db.User.hasOne(db.Cart, { foreignKey: 'userId' });
+db.Cart.belongsTo(db.User, { foreignKey: 'userId' });
 
 module.exports = db; 

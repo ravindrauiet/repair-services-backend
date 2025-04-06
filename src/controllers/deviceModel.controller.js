@@ -374,6 +374,31 @@ exports.updateDeviceModel = async (req, res) => {
   }
 };
 
+// In src/controllers/deviceModel.controller.js
+// Add this function if it doesn't exist:
+
+exports.getAllModels = async (req, res) => {
+  try {
+    const models = await DeviceModel.findAll({
+      include: [
+        { model: Brand },
+        { model: Category }
+      ]
+    });
+    
+    res.json({
+      success: true,
+      models
+    });
+  } catch (err) {
+    console.error('Error fetching models:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+};
+
 // Delete device model
 exports.deleteDeviceModel = async (req, res) => {
   try {

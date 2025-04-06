@@ -1,7 +1,7 @@
 module.exports = {
   HOST: process.env.DB_HOST || 'localhost',
   USER: process.env.DB_USER || 'root',
-  PASSWORD: process.env.DB_PASSWORD || 'your_password',
+  PASSWORD: process.env.DB_PASSWORD || 'Town@1234',
   DB: process.env.DB_NAME || 'repair_services',
   PORT: process.env.DB_PORT || 3306,
   dialect: 'mysql',
